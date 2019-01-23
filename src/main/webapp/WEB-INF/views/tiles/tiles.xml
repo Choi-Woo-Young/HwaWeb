@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+ 
+<tiles-definitions>
+ 
+        <!-- base tiles layout add -->
+ 
+        <definition name="base" template="/WEB-INF/views/layout/base.jsp">
+                <put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+                <put-attribute name="navbarTop" value="/WEB-INF/views/layout/navbarTop.jsp" />
+                <put-attribute name="menu" value="/WEB-INF/views/layout/menu.jsp" />
+                <put-attribute name="content" value="" />
+                <put-attribute name="bottomJs" value="/WEB-INF/views/layout/bottomJs.jsp" />
+                <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
+        </definition>
+        
+         <definition name="blank" template="/WEB-INF/views/layout/blank.jsp">
+         		<put-attribute name="header" value="/WEB-INF/views/layout/header.jsp" />
+                <put-attribute name="content" value="" />
+        </definition>
+        
+         <definition name="bypass" extends="blank">          	
+            <put-attribute name="content" value="/WEB-INF/views/bypass.jsp" />
+        </definition>
+        
+        <definition name="login" extends="blank">
+               <put-attribute name="content" value="/WEB-INF/views/views/login.jsp" />
+        </definition>
+        
+        <definition name="index" extends="base">
+               <put-attribute name="content" value="/WEB-INF/views/index.jsp" />
+        </definition>
+        
+        <definition name="*" extends="base">
+               <put-attribute name="content" value="/WEB-INF/views/views/{1}.jsp" />
+        </definition>
+   
+</tiles-definitions>
