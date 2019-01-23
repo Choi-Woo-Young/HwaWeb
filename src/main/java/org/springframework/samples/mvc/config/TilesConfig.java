@@ -19,6 +19,7 @@ public class TilesConfig {
 		return tilesViewResolver;
 	}
 
+	
 	/*
 	 * @Bean(name = "viewResolver") public TilesViewResolver tilesViewResolver() {
 	 * TilesViewResolver resolver = new TilesViewResolver();

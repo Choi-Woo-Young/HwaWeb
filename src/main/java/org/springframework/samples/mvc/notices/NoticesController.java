@@ -2,6 +2,7 @@ package org.springframework.samples.mvc.notices;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -65,41 +67,12 @@ public class NoticesController {
 		JsonArray array = object.get("Notices").getAsJsonArray();
 		System.out.println(array.toString());
 		
-		model.addAttribute("Notices", "abc");
-		
-		
-	/*
-		HashMap body = response.getBody();
-		
-		
-		List<Notice> list = (List<Notice>) body.get("Notices");
-		System.out.println("list:"+list.size());
-		System.out.println("list:"+list.get(0));
-		System.out.println(body.get("Notices"));
-		
-		
-		
-		
-		
-		
-		List<HashMap> listJsonObjects = new ArrayList<HashMap>(); 
-		
-		HashMap<String,String> object1 = new HashMap<>();
-		object1.put("title", "title");
-		object1.put("cont", "cont");
-		
-		HashMap<String,String> object2 = new HashMap<>();
-		object2.put("title", "title");
-		object2.put("cont", "cont");
-		
-		listJsonObjects.add(object1);
-		listJsonObjects.add(object2);
-		
-		model.addAttribute("Notices", listJsonObjects);
-		*/
-		//응답결과
-		
-		 
+		List<HashMap> list = new ArrayList<HashMap>();
+		for(int i=0; i< array.size(); i++ ) {			
+			HashMap<String, Object> hashMap = new Gson().fromJson(array.get(i).getAsJsonObject(), HashMap.class); 
+			list.add(hashMap);
+		}
+		model.addAttribute("Notices", list);
 		return "notices";
 	}
 
