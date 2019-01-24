@@ -1,55 +1,44 @@
-﻿    <div class="app-content content container-fluid">
+﻿ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+ <div class="app-content content container-fluid">
       <div class="content-wrapper">
         <div class="content-header row">
-          <div class="content-header-left col-md-6 col-xs-12 mb-1">
-            <h2 class="content-header-title">NICE알리미</h2>
-          </div>
         </div>
-     
-		<div class="col-md-6">
-			<div class="card">
-				<div class="card-header">
-					<h4 class="card-title" id="basic-layout-colored-form-control">Login</h4>
-					<a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-				</div>
-				<div class="card-body collapse in">
-					<div class="card-block">
-
-						<div class="card-text">
-							<p>You can always change the border color of the form controls using <code>border-*</code> class. In this example we have user <code>border-primary</code> class for form controls. Form action buttons are on the bottom right position.</p>
-						</div>
-
-						<form class="form" action="/spring-mvc-showcase/users/login" method="get" id="loginForm">
-							<div class="form-body">
-								<h4 class="form-section"><i class="icon-eye6"></i> About User</h4>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="userinput1">ID</label>
-											<input type="text" id="gwId" class="form-control border-primary" placeholder="id" name="gwId" value="wychoi">
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="userinput2">PW</label>
-											<input type="text" id="pw" class="form-control border-primary" placeholder="password" name="pw" value="nice1234!!">
-										</div>
-									</div>
-								</div>
-
-							<div class="form-actions right">
-								<button type="submit" class="btn btn-primary">
-									<i class="icon-check2"></i> Login
-								</button>
-							</div>
-							</div>
-						</form>
-
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+        <div class="content-body"><section class="flexbox-container">
+    <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1  box-shadow-2 p-0">
+        <div class="card border-grey border-lighten-3 m-0">
+            <div class="card-header no-border">
+                <div class="card-title text-xs-center">
+                    <div class="p-1"><img src="<c:url value="/resources/app-assets/images/logo/robust-logo-dark.png"/>" alt="branding logo"></div>
+                </div>
+                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login</span></h6>
+            </div>
+            <div class="card-body collapse in">
+                <div class="card-block">
+                    <form class="form-horizontal form-simple" action="/spring-mvc-showcase/users/login" method="get" novalidate>
+                        <fieldset class="form-group position-relative has-icon-left mb-0">
+                            <input type="text" class="form-control form-control-lg input-lg" id="gwId" name="gwId" placeholder="Your Username" value="wychoi" required>
+                            <div class="form-control-position">
+                                <i class="icon-head"></i>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group position-relative has-icon-left">
+                            <input type="password" class="form-control form-control-lg input-lg" id="pw" name="pw" placeholder="Enter Password" value="nice1234!!" required>
+                            <div class="form-control-position">
+                                <i class="icon-key3"></i>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group row">
+                            <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
+                                <fieldset>
+                                    <input type="checkbox" id="remember-me" class="chk-remember">
+                                    <label for="remember-me"> Remember Me</label>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="recover-password.html" class="card-link">비밀번호를 잊으셨나요?</a></div>
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> login</button>
+                    </form>
+                </div>
+            </div>
   </body>
 </html>

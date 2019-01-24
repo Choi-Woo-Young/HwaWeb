@@ -1,61 +1,88 @@
 package org.springframework.samples.mvc.notices;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@XmlRootElement
 public class Notice {
 
-    @Expose
-    @SerializedName("noticeId")
-    private int noticeId;
+	@Expose
+	@SerializedName("issuetitle")
+	private String issuetitle;
 
-    @Expose
-    @SerializedName("usrId")
-    private int usrId;
+	@Expose
+	@SerializedName("comments")
+	private String comments;
 
-    @Expose
-    @SerializedName("noticeTitle")
-    private String noticeTitle;
+	@Expose
+	@SerializedName("noticeId")
+	private int noticeId;
 
-    @Expose
-    @SerializedName("noticeCont")
-    private String noticeCont;
+	@Expose
+	@SerializedName("usrId")
+	private int usrId;
 
-    @Expose
-    @SerializedName("pushTargetCd")
-    private String pushTargetCd;
+	@Expose
+	@SerializedName("noticeTitle")
+	private String noticeTitle;
 
-    @Expose
-    @SerializedName("pushTargetCdNm")
-    private String pushTargetCdNm;
+	@Expose
+	@SerializedName("noticeCont")
+	private String noticeCont;
 
-    @Expose
-    @SerializedName("newYN")
-    private String newYN;
+	@Expose
+	@SerializedName("pushTargetCd")
+	private String pushTargetCd;
 
-    @Expose
-    @SerializedName("usrNm")
-    private String usrNm;
+	@Expose
+	@SerializedName("pushTargetCdNm")
+	private String pushTargetCdNm;
 
-    @Expose
-    @SerializedName("deptNm")
-    private String deptNm;
+	@Expose
+	@SerializedName("newYN")
+	private String newYN;
 
-    @Expose
-    @SerializedName("deptId")
-    private String deptId;
+	@Expose
+	@SerializedName("usrNm")
+	private String usrNm;
 
-    @Expose
-    @SerializedName("position")
-    private String position;
+	@Expose
+	@SerializedName("deptNm")
+	private String deptNm;
 
-    @Expose
-    @SerializedName("created")
-    private String created;
+	@Expose
+	@SerializedName("deptId")
+	private String deptId;
 
-    @Expose
-    @SerializedName("modified")
-    private String modified;
+	@Expose
+	@SerializedName("position")
+	private String position;
+
+	@Expose
+	@SerializedName("created")
+	private String created;
+
+	@Expose
+	@SerializedName("modified")
+	private String modified;
+
+	public String getIssuetitle() {
+		return issuetitle;
+	}
+
+	public void setIssuetitle(String issuetitle) {
+		this.issuetitle = issuetitle;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 
 	public int getNoticeId() {
 		return noticeId;
@@ -163,12 +190,11 @@ public class Notice {
 
 	@Override
 	public String toString() {
-		return "Notice [noticeId=" + noticeId + ", usrId=" + usrId + ", noticeTitle=" + noticeTitle + ", noticeCont="
-				+ noticeCont + ", pushTargetCd=" + pushTargetCd + ", pushTargetCdNm=" + pushTargetCdNm + ", newYN="
-				+ newYN + ", usrNm=" + usrNm + ", deptNm=" + deptNm + ", deptId=" + deptId + ", position=" + position
-				+ ", created=" + created + ", modified=" + modified + "]";
+		return "Notice [issuetitle=" + issuetitle + ", comments=" + comments + ", noticeId=" + noticeId + ", usrId="
+				+ usrId + ", noticeTitle=" + noticeTitle + ", noticeCont=" + noticeCont + ", pushTargetCd="
+				+ pushTargetCd + ", pushTargetCdNm=" + pushTargetCdNm + ", newYN=" + newYN + ", usrNm=" + usrNm
+				+ ", deptNm=" + deptNm + ", deptId=" + deptId + ", position=" + position + ", created=" + created
+				+ ", modified=" + modified + "]";
 	}
-    
-    
 
 }

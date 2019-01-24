@@ -36,3 +36,5 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/assets/css/style.css" />">
     <!-- END Custom CSS-->
+    <meta name="_csrf" content="${_csrf.token}"/>
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>

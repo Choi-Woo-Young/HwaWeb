@@ -1,9 +1,10 @@
 package org.springframework.samples.mvc.notices;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -41,7 +44,7 @@ public class NoticesController {
 		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
                 .path("/hwa/notices")
                 .queryParam("offset", 0)
-                .queryParam("limit", 5)
+                .queryParam("limit", 100)
                 .queryParam("sort", "created-")	                
                 .build()
                 .encode()
@@ -58,11 +61,8 @@ public class NoticesController {
 		//ResponseEntity<HashMap> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, HashMap.class);					
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class);
 		System.out.println("response:" + response.getBody());
-		
-		
-		
-		JsonParser jsonParser = new JsonParser();
-		
+					
+		JsonParser jsonParser = new JsonParser();		
 		JsonObject object = (JsonObject) jsonParser.parse(response.getBody());
 		JsonArray array = object.get("Notices").getAsJsonArray();
 		System.out.println(array.toString());
@@ -73,67 +73,77 @@ public class NoticesController {
 			list.add(hashMap);
 		}
 		model.addAttribute("Notices", list);
-		return "notices";
+		return "noticeList";
+	}
+	
+	// 공지사항 등록 화면 이동
+	@GetMapping("/goRegNotice")
+	public String goRegNotice(Model model, HttpSession session) {
+		System.out.println("/notices/goRegNotice");
+		return "regNoticeForm";
 	}
 
-	
-	@GetMapping("/test")
-	public String test(Model model, HttpSession session) {
-		System.out.println("noticeList");
-	
-		System.out.println("/notices/noticeList");
+	// 공지사항 등록 처리
+	@PostMapping("/regNotice")
+	public String regNotice(@ModelAttribute Notice notice, Model model, HttpSession session, HttpServletRequest request) {
+		System.out.println("/notices/regNotice:"+notice.toString());
+		
+		
+		/*
 		String authorization =  "Bearer ".concat(session.getAttribute("access_token").toString());
 		System.out.println("authorization:" + authorization);
 
+		//URL만들기
 		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
                 .path("/hwa/notices")
-                .queryParam("offset", 5)
-                .queryParam("limit", 1)
+                .queryParam("offset", 0)
+                .queryParam("limit", 100)
                 .queryParam("sort", "created-")	                
                 .build()
                 .encode()
                 .toUriString();
-		
+		//header
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("accept", "application/json");
 		headers.set("authorization", authorization);
+		
+		//HttpEntity
 		HttpEntity<?> httpEntity = new HttpEntity<>(headers);
-		
-		JsonObject jsonObject = new JsonObject();		
-		jsonObject.addProperty("offset",5);
-		jsonObject.addProperty("limit", 1);
-		jsonObject.addProperty("sort", "created-");
-		
-		ResponseEntity<String> responseStr = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class, jsonObject);
-		System.out.println("notices:" + responseStr);
-			
-		
 
-		/*
-		//okhttp3 사용
-		try {
-			OkHttpClient client = new OkHttpClient();
-
-			String url = "https://api-hwa.niceinfo.co.kr/hwa/notices";
-
-			Request request = new Request.Builder()
-					.addHeader("accept", "application/json")
-					.addHeader("authorization", authorization)
-					.url(uri)
-					.build();
-			
-			Response response = client.newCall(request).execute();
-
-			String result = response.body().string();
-			System.out.println("result:" + result);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//Post 호출 (					
+		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, httpEntity, String.class);
+		System.out.println("response:" + response.getBody());
+					
+		JsonParser jsonParser = new JsonParser();		
+		JsonObject object = (JsonObject) jsonParser.parse(response.getBody());
+		JsonArray array = object.get("Notices").getAsJsonArray();
+		System.out.println(array.toString());
 		*/
+		//공지사항 등록 처리
 		
-		return "notices";
+		return "noticeList";
 	}
 
-
+	
+	
+	
+	/*
+	//okhttp3 사용
+	try {
+		OkHttpClient client = new OkHttpClient();
+		String url = "https://api-hwa.niceinfo.co.kr/hwa/notices";
+		Request request = new Request.Builder()
+				.addHeader("accept", "application/json")
+				.addHeader("authorization", authorization)
+				.url(uri)
+				.build();			
+		Response response = client.newCall(request).execute();
+		String result = response.body().string();
+		System.out.println("result:" + result);			
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	*/
+	
+	
 }

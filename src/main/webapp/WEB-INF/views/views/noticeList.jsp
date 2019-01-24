@@ -16,9 +16,8 @@
             </div>
             <div class="card-body">
                 <div class="card-block">
-                    <p>공지사항입니다.<span class="float-xs-right"><a href="#">뭐넣지? <i class="icon-arrow-right2"></i></a></span></p>
-                    <li class=" nav-item"><a href="<c:url value="/notices/noticeList"/>"><i class="icon-table2"></i><span data-i18n="nav.bootstrap_tables.table_basic" class="menu-title">공지사항</span></a>
-          </li>
+                    <!--<p>공지사항입니다. <span class="float-xs-right"><a href="#">뭐넣지? <i class="icon-arrow-right2"></i></a></span> --></p>
+                    <a href="/spring-mvc-showcase/notices/goRegNotice"><button type="submit" class="btn btn-primary float-xs-right"><i class="icon-android-add"></i>등록</button> </a>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-hover mb-0" style="table-layout: fixed;">

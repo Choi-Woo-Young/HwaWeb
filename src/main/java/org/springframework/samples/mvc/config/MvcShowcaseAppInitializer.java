@@ -25,10 +25,12 @@ public class MvcShowcaseAppInitializer extends AbstractAnnotationConfigDispatche
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}
-
+	
+	//csrf 보안적용 시 post 요청하면 403에러나 발생하여 임시로 csrf적용안함. 
+	/*
 	@Override
 	protected Filter[] getServletFilters() {
 		return new Filter[] { new DelegatingFilterProxy("csrfFilter") };
 	}
-
+	 */
 }
