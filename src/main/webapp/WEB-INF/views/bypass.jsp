@@ -3,4 +3,3 @@
 <%  System.out.println("bypass");	
 	response.sendRedirect("/users/goLogin");
  %>
-<div>bypass</div>

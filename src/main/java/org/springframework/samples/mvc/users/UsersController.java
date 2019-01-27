@@ -57,6 +57,8 @@ public class UsersController {
 	
 		JsonParser parser = new JsonParser();
 		JsonObject responseJsonobj = parser.parse(responseStr).getAsJsonObject();
+		//로그인 사용자 성보 세션에 담기
+		
 		
 		//로그인 정보 세션에 저장
 		session.setAttribute("access_token", responseJsonobj.get("access_token").getAsString());

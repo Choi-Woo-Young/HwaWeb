@@ -28,7 +28,7 @@
 	</div>
 	
 	<!-- <tiles:insertAttribute name="footer"  ignore="true"/> -->
-	<!-- <tiles:insertAttribute name="bottomJs"  ignore="true"/> -->
+	<tiles:insertAttribute name="bottomJs"  ignore="true"/> 
 	
 
 </body>

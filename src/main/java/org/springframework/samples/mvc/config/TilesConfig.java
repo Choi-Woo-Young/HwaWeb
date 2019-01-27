@@ -11,21 +11,25 @@ import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
 @Configuration
 public class TilesConfig {
 
+	
+
+	@Bean(name = "viewResolver")
+	public TilesViewResolver tilesViewResolver() {
+		TilesViewResolver resolver = new TilesViewResolver();
+		resolver.setViewClass(TilesView.class);
+		resolver.setOrder(1);
+		return resolver;
+	}
+	
 	@Bean
 	public UrlBasedViewResolver viewResolver() {
 		UrlBasedViewResolver tilesViewResolver = new UrlBasedViewResolver();
 		tilesViewResolver.setViewClass(TilesView.class);
-		tilesViewResolver.setOrder(1);
+		tilesViewResolver.setOrder(2);
 		return tilesViewResolver;
 	}
 
-	
-	/*
-	 * @Bean(name = "viewResolver") public TilesViewResolver tilesViewResolver() {
-	 * TilesViewResolver resolver = new TilesViewResolver();
-	 * resolver.setViewClass(TilesView.class); resolver.setOrder(1); return
-	 * resolver; }
-	 */
+
 	@Bean
 	public TilesConfigurer tilesConfigurer() {
 		TilesConfigurer tiles = new TilesConfigurer();

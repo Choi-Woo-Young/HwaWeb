@@ -1,7 +1,6 @@
 package org.springframework.samples.mvc.notices;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +13,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
@@ -86,20 +88,55 @@ public class NoticesController {
 	// 공지사항 등록 처리
 	@PostMapping("/regNotice")
 	public String regNotice(@ModelAttribute Notice notice, Model model, HttpSession session, HttpServletRequest request) {
-		System.out.println("/notices/regNotice:"+notice.toString());
+		System.out.println("/notices/regNotice:" + notice.toString());
 		
+		String authorization =  "Bearer ".concat(session.getAttribute("access_token").toString());
+		System.out.println("authorization:" + authorization);
 		
+		String body = notice.jsonStringFromObject();
+		System.out.println("body: " + body);
 		/*
+		//URL만들기
+		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
+                .path("/hwa/notices")              
+                .build()
+                .encode()
+                .toUriString();
+		//header
+		HttpHeaders headers = new HttpHeaders();
+		//headers.set("accept", "application/json");
+		headers.set("authorization", authorization);
+		
+		MultiValueMap<String, Object> paramMap= new LinkedMultiValueMap<String, Object>();
+		paramMap.add("noticeTitle", notice.getNoticeTitle());
+		paramMap.add("noticeCont", notice.getNoticeCont());
+		paramMap.add("pushTargetCd", notice.getPushTargetCd()); 
+		
+		//HttpEntity
+		HttpEntity<?> httpEntity = new HttpEntity<>(paramMap, headers);
+		
+		//Post 호출 (					
+		String response = restTemplate.postForObject(uri, httpEntity, String.class);
+		System.out.println("response:" + response);
+		*/
+		return "redirect:/notices/noticeList";
+	}
+
+
+	// 공지사항 등록 화면 이동
+	@GetMapping("/{noticeId}")
+	public String noticeDetail(Model model, HttpSession session, @PathVariable int noticeId) {
+		System.out.println("/notices/{noticeId}" + noticeId);
+		
+		model.addAttribute("noticeId", noticeId);
+		
 		String authorization =  "Bearer ".concat(session.getAttribute("access_token").toString());
 		System.out.println("authorization:" + authorization);
 
 		//URL만들기
 		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
-                .path("/hwa/notices")
-                .queryParam("offset", 0)
-                .queryParam("limit", 100)
-                .queryParam("sort", "created-")	                
-                .build()
+                .path("/hwa/notices/{noticeId}")                        
+                .build().expand(noticeId)
                 .encode()
                 .toUriString();
 		//header
@@ -110,22 +147,20 @@ public class NoticesController {
 		//HttpEntity
 		HttpEntity<?> httpEntity = new HttpEntity<>(headers);
 
-		//Post 호출 (					
-		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, httpEntity, String.class);
+		//get 호출 (					
+		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class);
 		System.out.println("response:" + response.getBody());
-					
-		JsonParser jsonParser = new JsonParser();		
-		JsonObject object = (JsonObject) jsonParser.parse(response.getBody());
-		JsonArray array = object.get("Notices").getAsJsonArray();
-		System.out.println(array.toString());
-		*/
-		//공지사항 등록 처리
 		
-		return "noticeList";
+		JsonParser jsonParser = new JsonParser(); 
+		JsonObject noticeObject = (JsonObject)  jsonParser.parse(response.getBody());
+		HashMap<String, Object> hashMap = new Gson().fromJson(noticeObject.get("notice").getAsJsonObject(), HashMap.class);
+		  
+		model.addAttribute("notice", hashMap);
+
+		return "noticeDetail";
 	}
 
-	
-	
+
 	
 	/*
 	//okhttp3 사용

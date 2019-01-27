@@ -1,6 +1,14 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!-- Recent invoice with Statistics -->
+
+<script type="text/javascript">
+function goNoticeDetail(noticeId){
+	console.log("noticeId:"+noticeId);
+	var $f = $('#frm');
+	  $f.prop("action","/spring-mvc-showcase/notices/"+noticeId);
+	  $f.submit();
+}
+</script>
 <div class="row match-height">
     <div class="col-xl-12 col-lg-12">
         <div class="card">
@@ -19,6 +27,11 @@
                     <!--<p>공지사항입니다. <span class="float-xs-right"><a href="#">뭐넣지? <i class="icon-arrow-right2"></i></a></span> --></p>
                     <a href="/spring-mvc-showcase/notices/goRegNotice"><button type="submit" class="btn btn-primary float-xs-right"><i class="icon-android-add"></i>등록</button> </a>
                 </div>
+                <form name="frm" id="frm" method="get">
+					<input type="hidden" id="noticeId" value="" />
+				</form>
+                
+                
                 <div class="table-responsive">
                     <table class="table table-hover mb-0" style="table-layout: fixed;">
                         <thead>
@@ -32,7 +45,7 @@
                         </thead>
                         <tbody> 
 	                	<c:forEach var="row" items="${Notices}">
-							<tr>
+							<tr id="${row.noticeId}" onclick="goNoticeDetail(${row.noticeId})">
                                 <td class="text-truncate"><a href="#">${row.noticeTitle}</td>
                                 <td class="text-truncate" style='width:50px;white-space:nowrap;overflow:hidden;text-overflow;ellipsis;'>${row.noticeCont} </td>
                                 <td class="text-truncate"><span class="tag tag-default tag-success">${row.pushTargetCdNm}</span></td>

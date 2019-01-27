@@ -18,17 +18,26 @@
             	<div class="card-block">  
                 	<form class="form" action="<c:url value="/notices/regNotice" />" method="post">
 						<div class="form-body">
-							<div class="form-group">
-								<label for="issueinput1">제목</label>
-								<input type="text" id="issueinput1" class="form-control" placeholder="공지사항 제목" name="issuetitle" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="공지사항 제목">
+							<div class="col-md-8">
+								<label for="noticeTitle">제목</label>
+								<input type="text" id="noticeTitle" class="form-control" placeholder="공지사항 제목" name="noticeTitle" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="공지사항 제목">
 							</div>
-							
-							<div class="form-group">
-								<label for="issueinput8">내용</label>
-								<textarea id="issueinput8" rows="15" class="form-control" name="comments" placeholder="공지사항 내용" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="공지사항 내용"></textarea>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label for="projectinput5">알림대상</label>
+									<select id="pushTargetCd" name="pushTargetCd" class="form-control">
+										<option value="110030" selected="">알림없음</option>
+										<option value="110020">IT</option>
+										<option value="110010">전체</option>									
+									</select>
+								</div>
 							</div>
-
+							<div class="col-md-12">
+								<label for="noticeCont">내용</label>
+								<textarea id="noticeCont" rows="15" class="form-control" name="noticeCont" placeholder="공지사항 내용" data-toggle="tooltip" data-trigger="hover" data-placement="top" data-title="공지사항 내용"></textarea>
+							</div>
 						</div>
+						<!-- 
 						<div class="col-md-2">		
 							<label for="issueinput8">알림 대상</label>
 						</div>
@@ -57,8 +66,9 @@
 									<p>push 알림을 보내지 않습니다.</p>
 								</div>
 							</div>
-						</div>						
-						<div class="form-actions float-xs-right">
+						</div>		
+						 -->		
+						<div class="form-actions float-xs-right" style="border-top: 0px solid #dadada;">
 							<a href="/spring-mvc-showcase/notices/noticeList"><button type="button" class="btn btn-warning mr-1">	<i class="icon-cross2"></i> 취소	</button></a>
 							<button type="submit" class="btn btn-primary">	<i class="icon-check2"></i> 등록 </button>
 						</div>

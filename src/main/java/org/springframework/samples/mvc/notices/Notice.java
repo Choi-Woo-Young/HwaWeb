@@ -2,6 +2,8 @@ package org.springframework.samples.mvc.notices;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -197,4 +199,20 @@ public class Notice {
 				+ ", modified=" + modified + "]";
 	}
 
+	public String jsonStringFromObject(){
+		String jsonStr = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			jsonStr = mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jsonStr;
+	}
+	/*
+	 * public String jsonStringFromObject(Object object) throws
+	 * JsonProcessingException { ObjectMapper mapper = new ObjectMapper(); return
+	 * mapper.writeValueAsString(object); }
+	 */
 }

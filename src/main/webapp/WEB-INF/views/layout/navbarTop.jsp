@@ -5,7 +5,7 @@
         <div class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="nav-item mobile-menu hidden-md-up float-xs-left"><a class="nav-link nav-menu-main menu-toggle hidden-xs"><i class="icon-menu5 font-large-1"></i></a></li>
-            <li class="nav-item"><a href="<c:url value="/"/>" class="navbar-brand nav-link"><img alt="branding logo" src="<c:url value="/resources/app-assets/images/logo/robust-logo-light.png" />" data-expand="<c:url value="/resources/app-assets/images/logo/robust-logo-light.png"/>" data-collapse="<c:url value="/resources/app-assets/images/logo/robust-logo-small.png" />" class="brand-logo"></a></li>
+            <li class="nav-item"><a href="<c:url value="/"/>" class="navbar-brand nav-link"><img alt="branding logo" src="<c:url value="/resources/app-assets/images/logo/nice_alrimi-logo-light.png" />" data-expand="<c:url value="/resources/app-assets/images/logo/nice_alrimi-logo-light.png"/>" data-collapse="<c:url value="/resources/app-assets/images/logo/nice_alrimi-logo-light.png" />" class="brand-logo"></a></li>
             <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-mobile" class="nav-link open-navbar-container"><i class="icon-ellipsis pe-2x icon-icon-rotate-right-right"></i></a></li>
           </ul>
         </div>
