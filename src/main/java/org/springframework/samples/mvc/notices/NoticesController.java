@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,7 +96,7 @@ public class NoticesController {
 		
 		String body = notice.jsonStringFromObject();
 		System.out.println("body: " + body);
-		/*
+		
 		//URL만들기
 		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
                 .path("/hwa/notices")              
@@ -105,25 +106,27 @@ public class NoticesController {
 		//header
 		HttpHeaders headers = new HttpHeaders();
 		//headers.set("accept", "application/json");
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 		headers.set("authorization", authorization);
-		
+		/*
 		MultiValueMap<String, Object> paramMap= new LinkedMultiValueMap<String, Object>();
 		paramMap.add("noticeTitle", notice.getNoticeTitle());
 		paramMap.add("noticeCont", notice.getNoticeCont());
 		paramMap.add("pushTargetCd", notice.getPushTargetCd()); 
+		*/
 		
 		//HttpEntity
-		HttpEntity<?> httpEntity = new HttpEntity<>(paramMap, headers);
+		HttpEntity<?> httpEntity = new HttpEntity<>(body, headers);
 		
 		//Post 호출 (					
 		String response = restTemplate.postForObject(uri, httpEntity, String.class);
 		System.out.println("response:" + response);
-		*/
+	
 		return "redirect:/notices/noticeList";
 	}
 
 
-	// 공지사항 등록 화면 이동
+	// 공지사항 상세화면을 이동
 	@GetMapping("/{noticeId}")
 	public String noticeDetail(Model model, HttpSession session, @PathVariable int noticeId) {
 		System.out.println("/notices/{noticeId}" + noticeId);
@@ -162,6 +165,73 @@ public class NoticesController {
 
 
 	
+	// 공지사항 수정 화면 이동
+	@GetMapping("/goModNotice/{noticeId}")
+	public String goModNotice(Model model, HttpSession session, @PathVariable int noticeId) {
+		System.out.println("/notices/goModNotice| noticeId:"+noticeId);	
+		
+		String authorization =  "Bearer ".concat(session.getAttribute("access_token").toString());
+		System.out.println("authorization:" + authorization);
+
+		//URL만들기
+		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
+                .path("/hwa/notices/{noticeId}")                        
+                .build().expand(noticeId)
+                .encode()
+                .toUriString();
+		//header
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("accept", "application/json");
+		headers.set("authorization", authorization);
+		
+		//HttpEntity
+		HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+
+		//get 호출 (					
+		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, String.class);
+		System.out.println("response:" + response.getBody());
+		
+		JsonParser jsonParser = new JsonParser(); 
+		JsonObject noticeObject = (JsonObject)  jsonParser.parse(response.getBody());
+		HashMap<String, Object> hashMap = new Gson().fromJson(noticeObject.get("notice").getAsJsonObject(), HashMap.class);
+		  
+		model.addAttribute("notice", hashMap);
+		
+		return "modNoticeForm";
+	}
+	
+	
+	// 공지사항 등록 처리
+	@PostMapping("/modNotice")
+	public String modNotice(@ModelAttribute Notice notice, Model model, HttpSession session, HttpServletRequest request) {
+		System.out.println("/notices/modNotice:" + notice.toString());
+		
+		String authorization =  "Bearer ".concat(session.getAttribute("access_token").toString());
+		System.out.println("authorization:" + authorization);
+		
+		String body = notice.jsonStringFromObject();
+		System.out.println("body: " + body);
+		
+		//URL만들기
+		String uri = UriComponentsBuilder.newInstance().scheme("https").host("api-hwa.niceinfo.co.kr")
+				.path("/hwa/notices/{noticeId}")                        
+                .build().expand(notice.getNoticeId())
+                .encode()
+                .toUriString();
+		//header
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		headers.set("authorization", authorization);
+		
+		//HttpEntity
+		HttpEntity<?> httpEntity = new HttpEntity<>(body, headers);
+		
+		//put 호출 
+		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.PUT, httpEntity, String.class);
+		System.out.println("response:" + response);
+	
+		return "redirect:/notices/"+notice.getNoticeId();
+	}
 	/*
 	//okhttp3 사용
 	try {
