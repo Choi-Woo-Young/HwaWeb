@@ -22,7 +22,7 @@ import com.google.gson.JsonParser;
  
 
 @Controller
-@RequestMapping("/users")   
+@RequestMapping("/users")
 public class UsersController {
 
 	@Autowired
